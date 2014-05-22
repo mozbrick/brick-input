@@ -43,23 +43,23 @@
     this.ns = {};
 
     // the label
-    var label = this.querySelectorAll("label")[0]
+    var label = this.querySelectorAll("label")[0];
     if (!label) {
       label = document.createElement("label");
       var labelText = this.getAttribute("label");
       label.innerHTML = labelText;
-    };
+    }
     this.appendChild(label);
 
     // the input
-    this.ns.input  = this.querySelectorAll("input")[0]
+    this.ns.input  = this.querySelectorAll("input")[0];
     if (!this.ns.input) {
       this.ns.input = document.createElement("input");
       var inputType = this.getAttribute("type") || "text";
       var name = this.getAttribute("name");
       this.ns.input.setAttribute("type", inputType);
       this.ns.input.setAttribute("name", inputType);
-    };
+    }
     label.appendChild(this.ns.input);
 
     // Save the input data on change
