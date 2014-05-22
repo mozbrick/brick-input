@@ -1,0 +1,24 @@
+{
+  "name": "x-formrow",
+  "version": "0.0.1",
+  "description": "x-formrow",
+  "license": "MIT",
+  "main": [
+    "src/x-formrow.js",
+    "src/x-formrow.css",
+    "src/x-formrow.styl"
+  ],
+  "keywords": [
+    "web-components",
+    "brick"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "brick-common": "*",
+    "platform": "Polymer/platform#~0.2.4",
+  }
+}

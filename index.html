@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>&lt;x-formrow&gt;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <!-- Importing Web Component's Polyfill -->
+    <script src="bower_components/platform/platform.js"></script>
+
+    <!-- Importing the Component -->
+    <script src="src/x-formrow.js"></script>
+    <link rel="stylesheet" href="src/x-formrow.css">
+
+  </head>
+  <body>
+    <x-formrow label="Text" type="text" name="hallo" value="hallo" required></x-formrow>
+    <x-formrow label="Search" type="search" name="search"></x-formrow>
+    <x-formrow label="E-Mail" type="email" name="email"></x-formrow>
+    <x-formrow label="URL" type="url" name="url"></x-formrow>
+    <x-formrow label="Tel" type="tel" name="tel"></x-formrow>
+    <x-formrow label="Password" type="password" name="password"></x-formrow>
+    <x-formrow label="Checkbox" type="checkbox" name="checkbox"></x-formrow>
+    <x-formrow label="Range" type="range" name="range" value="10"></x-formrow>
+    <x-formrow label="Date" type="date" name="date"></x-formrow>
+    <x-formrow label="DateTime" type="datetime" name="datetime"></x-formrow>
+    <x-formrow label="DateTimeLocal" type="datetime-local" name="datetime"></x-formrow>
+    <x-formrow label="Month" type="month" name="month"></x-formrow>
+    <x-formrow label="Number" type="number" name="number" max="10"></x-formrow>
+    <x-formrow label="Color" type="color" name="color"></x-formrow>
+    <x-formrow label='explicit'><input type="text" name="explicit"></x-formrow>
+  </body>
+</html>
