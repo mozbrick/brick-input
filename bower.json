@@ -1,24 +1,26 @@
 {
-  "name": "x-formrow",
-  "version": "0.0.1",
-  "description": "x-formrow",
-  "license": "MIT",
-  "main": [
-    "src/x-formrow.js",
-    "src/x-formrow.css",
-    "src/x-formrow.styl"
+  "name": "brick-input",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mozbrick/brick-input",
+  "authors": [
+    "mozilla"
   ],
+  "description": "A Brick input element.",
+  "main": "src/brick-input.html",
   "keywords": [
-    "web-components",
-    "brick"
+    "brick",
+    "webcomponents"
   ],
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "test",
+    "tests"
   ],
   "dependencies": {
     "brick-common": "*",
-    "platform": "Polymer/platform#~0.2.4"
+    "platform": "Polymer/platform"
   }
 }

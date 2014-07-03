@@ -1,0 +1,72 @@
+@import '../bower_components/brick-common/styles/mixins'
+@import '../bower_components/brick-common/styles/params'
+
+brick-input {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+
+  .error {
+    font-size: .8125em; /* 13/16 */
+    display: none;
+    color: red;
+  }
+
+  &.invalid {
+    .error {
+      display: inline;
+    }
+  }
+
+  &[row] {
+    flexbox();
+    input {
+      flex: 1;
+      margin-left: 12px;
+    }
+  }
+
+  &[floating] {
+    position: relative;
+
+    label, input {
+      display: block;
+      //border: 0;
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 2.25em 1em 1em;
+      outline: 0;
+    }
+
+    label {
+      z-index: 2;
+      min-width: 100%;
+      font-size: .8125em; /* 13/16 */
+      position: absolute;
+      min-width: 200px; // todo: fix
+      top: 1.23em;
+      left: 1.23em;
+      color: #f1773b;
+      opacity: 1;
+      -webkit-transition: .333s ease top, .333s ease opacity;
+      transition: .333s ease top, .333s ease opacity;
+    }
+
+    &.hide-label {
+      label {
+        opacity: 0;
+        top: 1.5em
+      }
+    }
+
+    &.unhighlight-label {
+      label {
+        color: #999
+      }
+    }
+  }
+
+}

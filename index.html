@@ -1,33 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>&lt;x-formrow&gt;</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>brick-input</title>
 
-    <!-- Importing Web Component's Polyfill -->
+    <!-- Importing Polyfill -->
     <script src="bower_components/platform/platform.js"></script>
 
-    <!-- Importing the Component -->
-    <script src="src/x-formrow.js"></script>
-    <link rel="stylesheet" href="src/x-formrow.css">
-
+    <!-- Importing Custom Elemenent -->
+    <link rel="import" href="src/brick-input.html">
   </head>
   <body>
-    <x-formrow label="Text" type="text" name="hallo" value="hallo" required></x-formrow>
-    <x-formrow label="Search" type="search" name="search"></x-formrow>
-    <x-formrow label="E-Mail" type="email" name="email"></x-formrow>
-    <x-formrow label="URL" type="url" name="url"></x-formrow>
-    <x-formrow label="Tel" type="tel" name="tel"></x-formrow>
-    <x-formrow label="Password" type="password" name="password"></x-formrow>
-    <x-formrow label="Checkbox" type="checkbox" name="checkbox"></x-formrow>
-    <x-formrow label="Range" type="range" name="range" value="10"></x-formrow>
-    <x-formrow label="Date" type="date" name="date"></x-formrow>
-    <x-formrow label="DateTime" type="datetime" name="datetime"></x-formrow>
-    <x-formrow label="DateTimeLocal" type="datetime-local" name="datetime"></x-formrow>
-    <x-formrow label="Month" type="month" name="month"></x-formrow>
-    <x-formrow label="Number" type="number" name="number" max="10"></x-formrow>
-    <x-formrow label="Color" type="color" name="color"></x-formrow>
-    <x-formrow label='explicit'><input type="text" name="explicit"></x-formrow>
+
+    <!-- Using Custom Element -->
+    <h3>name + label + row:</h3>
+    <brick-input name="1"
+                 label="What is 7 + 13?"
+                 row>
+
+    </brick-input>
+    <hr>
+    <h3>name + label + row + validate + error:</h3>
+    <brick-input name="2"
+                 label="What is 7 + 13?"
+                 error="No it's not!"
+                 validate="20"
+                 row>
+    </brick-input>
+    <hr>
+    <h3>name + label + validate + error + floating:</h3>
+    <brick-input name="3"
+                 label="What is 7 + 13?"
+                 error="No it's not!"
+                 validate="20"
+                 floating>
+    </brick-input>
+
   </body>
 </html>
