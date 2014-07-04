@@ -41,7 +41,7 @@
       addClass(brickInput, "show-label");
     }, 0);
   }
-  function removeLabel(brickInput) {
+  function hideLabel(brickInput) {
     removeClass(brickInput, "show-label");
   }
 
@@ -51,24 +51,24 @@
     var input = brickInput.inputElement;
     var placeholder = brickInput.label;
 
-    if (e.type === "keyup") {
-      // if (value === '') {
-      //   input.setAttribute("placeholder",placeholder);
-      //   removeLabel(brickInput);
-      // } else {
-      //   showLabel(brickInput);
-      // }
-    } else if(e.type === "blur") {
+    var transitionEndListener = function(e){
+      var brickInput = e.currentTarget;
+      removeClass(brickInput,"transition");
+      brickInput.removeEventListener("transitionend",transitionEndListener);
+    };
+    brickInput.addEventListener("transitionend",transitionEndListener);
+    addClass(brickInput,"transition");
+    if(e.type === "blur") {
       if (value === '') {
-        removeLabel(brickInput);
-        input.setAttribute("placeholder",placeholder);
+        hideLabel(brickInput);
+        //input.setAttribute("placeholder",placeholder);
       } else {
         showLabel(brickInput);
         addClass(brickInput, "unhighlight-label");
       }
     } else if(e.type === "focus") {
       showLabel(brickInput);
-      input.removeAttribute("placeholder");
+      //input.removeAttribute("placeholder");
       removeClass(brickInput, "unhighlight-label");
     }
   }
@@ -100,7 +100,7 @@
 
     // float the label
     if (this.floating) {
-      this.inputElement.setAttribute("placeholder",labelText);
+      //this.inputElement.setAttribute("placeholder",labelText);
     }
 
     //append it all
@@ -111,7 +111,6 @@
     // EventListeners
     this.addEventListener("change", inputValueChanged);
     if (this.floating) {
-      this.inputElement.addEventListener("keyup", floatingLabelHandler);
       this.inputElement.addEventListener("blur", floatingLabelHandler);
       this.inputElement.addEventListener("focus", floatingLabelHandler);
     }
