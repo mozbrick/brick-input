@@ -22,7 +22,6 @@
   }
 
   function inputValueChanged(e) {
-    console.log(e.currentTarget);
     var brickInput = e.currentTarget;
     validateInput(brickInput);
   }
@@ -37,6 +36,15 @@
     }
   }
 
+  function showLabel(brickInput) {
+    setTimeout(function() {
+      addClass(brickInput, "show-label");
+    }, 50);
+  }
+  function removeLabel(brickInput) {
+    removeClass(brickInput, "show-label");
+  }
+
   function floatingLabelHandler(e) {
     var brickInput = e.currentTarget.parentNode;
     var value = brickInput.value;
@@ -44,26 +52,24 @@
     var placeholder = brickInput.label;
 
     if (e.type === "keyup") {
-      if (value === '') {
-        addClass(brickInput, "hide-label");
-      } else {
-        removeClass(brickInput, "hide-label");
-      }
+      // if (value === '') {
+      //   input.setAttribute("placeholder",placeholder);
+      //   removeLabel(brickInput);
+      // } else {
+      //   showLabel(brickInput);
+      // }
     } else if(e.type === "blur") {
       if (value === '') {
-        addClass(brickInput, "hide-label");
+        removeLabel(brickInput);
         input.setAttribute("placeholder",placeholder);
       } else {
-        removeClass(brickInput, "hide-label");
+        showLabel(brickInput);
         addClass(brickInput, "unhighlight-label");
       }
     } else if(e.type === "focus") {
-      if (value === '') {
-        removeClass(brickInput, "hide-label");
-        input.removeAttribute("placeholder");
-      } else {
-        removeClass(brickInput, "unhighlight-label");
-      }
+      showLabel(brickInput);
+      input.removeAttribute("placeholder");
+      removeClass(brickInput, "unhighlight-label");
     }
   }
 
@@ -95,7 +101,6 @@
     // float the label
     if (this.floating) {
       this.inputElement.setAttribute("placeholder",labelText);
-      addClass(this, "hide-label");
     }
 
     //append it all
