@@ -5,7 +5,7 @@ brick-input {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-
+  display: block;
   .error {
     font-size: .8125em; /* 13/16 */
     display: none;
@@ -27,38 +27,38 @@ brick-input {
   }
 
   &[floating] {
-    position: relative;
 
+    position: relative;
     label, input {
+      //padding: 1em 0 0 0;
       display: block;
-      //border: 0;
     }
 
     input {
       width: 100%;
       height: 100%;
-      padding: 2.25em 1em 1em;
-      outline: 0;
+      transition: all 0.3s ease-in-out;
     }
 
     label {
-      z-index: 2;
-      min-width: 100%;
-      font-size: .8125em; /* 13/16 */
+      z-index: 1;
+      left: .3em;
+      font-size: .6875em; /* 11/16 */
       position: absolute;
-      min-width: 200px; // todo: fix
-      top: 1.23em;
-      left: 1.23em;
+      top: .5em;
+      opacity: 0;
       color: #f1773b;
-      opacity: 1;
-      -webkit-transition: .333s ease top, .333s ease opacity;
-      transition: .333s ease top, .333s ease opacity;
+      transition: all 0.3s ease-in-out;
     }
 
-    &.hide-label {
+    &.show-label {
       label {
-        opacity: 0;
-        top: 1.5em
+        top: .3em;
+        z-index: 2;
+        opacity: 1;
+      }
+     input {
+        padding: 1.2em 0 0 0;
       }
     }
 
