@@ -39,7 +39,7 @@
   function showLabel(brickInput) {
     setTimeout(function() {
       addClass(brickInput, "show-label");
-    }, 50);
+    }, 0);
   }
   function removeLabel(brickInput) {
     removeClass(brickInput, "show-label");
