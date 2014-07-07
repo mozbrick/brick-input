@@ -48,27 +48,23 @@
   function floatingLabelHandler(e) {
     var brickInput = e.currentTarget.parentNode;
     var value = brickInput.value;
-    var input = brickInput.inputElement;
-    var placeholder = brickInput.label;
 
-    var transitionEndListener = function(e){
-      var brickInput = e.currentTarget;
-      removeClass(brickInput,"transition");
-      brickInput.removeEventListener("transitionend",transitionEndListener);
-    };
-    brickInput.addEventListener("transitionend",transitionEndListener);
-    addClass(brickInput,"transition");
+    // var transitionEndListener = function(e){
+    //   var brickInput = e.currentTarget;
+    //   removeClass(brickInput,"transition");
+    //   brickInput.removeEventListener("transitionend",transitionEndListener);
+    // };
+    // brickInput.addEventListener("transitionend",transitionEndListener);
+    // addClass(brickInput,"transition");
     if(e.type === "blur") {
       if (value === '') {
         hideLabel(brickInput);
-        //input.setAttribute("placeholder",placeholder);
       } else {
         showLabel(brickInput);
         addClass(brickInput, "unhighlight-label");
       }
     } else if(e.type === "focus") {
       showLabel(brickInput);
-      //input.removeAttribute("placeholder");
       removeClass(brickInput, "unhighlight-label");
     }
   }

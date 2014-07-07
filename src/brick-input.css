@@ -51,6 +51,7 @@ brick-input[row] input {
   margin-left: 1rem;
 }
 brick-input[floating] {
+  transition: all 0.3s ease-in-out;
   position: relative;
 }
 brick-input[floating] label,
