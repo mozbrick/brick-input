@@ -9,41 +9,19 @@
     <script src="bower_components/platform/platform.js"></script>
 
     <!-- Importing Custom Elemenent -->
-    <link rel="import" href="src/brick-input.html">
+    <link rel="import" href="dist/brick-input.local.html">
+    <style>
+      body,html {
+        margin: 0;
+        padding: 15px;
+      }
+    </style>
   </head>
   <body>
 
     <!-- Using Custom Element -->
-    <h3>name + label + row:</h3>
-    <brick-input name="1"
-                 label="What is 7 + 13?"
-                 row>
-
-    </brick-input>
-    <hr>
-    <h3>name + label + row + validate + error:</h3>
-    <brick-input name="2"
-                 label="What is 7 + 13?"
-                 error="No it's not!"
-                 validate="20$"
-                 row>
-    </brick-input>
-
-    <hr>
-    <h3>floating</h3>
-    <brick-input name="3"
-                 label="E-Mal"
-                 floating>
-    </brick-input>
-    <br>
-    <brick-input name="4"
-                 label="Name"
-                 floating>
-    </brick-input>
-    <br>
-    <brick-input name="5"
-                 label="Nationality"
-                 floating>
+    <brick-input>
+      <input type="text" name="test" >
     </brick-input>
 
   </body>

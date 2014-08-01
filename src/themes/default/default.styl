@@ -1,0 +1,63 @@
+@import '../../../bower_components/brick-common/styles/mixins'
+@import '../../../bower_components/brick-common/styles/params'
+@import '../../../bower_components/brick-common/styles/themes/default/params'
+
+
+:host {
+  display: inline-block;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #D6D6D6;
+  position: relative;
+
+  input {
+    min-height: 40px;
+    font-size: inherit;
+    width: 100%;
+    border: medium none;
+    padding: 0 $dim-small;
+    margin: 0px;
+    color: $color-alpha;
+    background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.5);
+    width: 100%;
+    nohighlight();
+  }
+
+  input:focus {
+    outline-width: 0;
+  }
+  input:focus~#indicator {
+    transform: scaleX(1);
+    transition-delay: var(--button-transition-delay, 200ms);
+  }
+  input:focus~#clear {
+    opacity: 1;
+  }
+
+
+  #indicator {
+    content: " ";
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 3px;
+    background: #333;
+    transition: all 0.2s;
+    transform: scaleX(0);
+    z-index: 9;
+  }
+  #clear {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    background: none repeat scroll 0% 0% #909CA7;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    opacity: 0;
+    color: #FFF;
+  }
+
+
+}

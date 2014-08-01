@@ -5,13 +5,13 @@
   "authors": [
     "mozilla"
   ],
-  "description": "A Brick input element.",
+  "description": "A Brick input field.",
   "main": "src/brick-input.html",
   "keywords": [
     "brick",
     "webcomponents"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -20,7 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "brick-common": "*",
-    "platform": "Polymer/platform"
+    "platform": "Polymer/platform",
+    "brick-common": "~0.1.4"
   }
 }
