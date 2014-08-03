@@ -1,45 +1,80 @@
 /* globals Platform */
 
-(function () {
+(function() {
 
   var currentScript = document._currentScript || document.currentScript;
 
+  function shimShadowStyles(styles, tag) {
+    for (var i = 0; i < styles.length; i++) {
+      var style = styles[i];
+      var cssText = Platform.ShadowCSS.shimStyle(style, tag);
+      Platform.ShadowCSS.addCssToDocument(cssText);
+      style.remove();
+    }
+  }
+
+  function copyAttributes(src, dest) {
+    var attrs = src.attributes;
+    for (var i = 0; i < attrs.length; i++) {
+      var attr = src.attributes[i];
+      dest.setAttribute(attr.name, attr.value);
+    }
+  }
+
+  function setupInput(el) {
+    el.input = el.querySelector('input');
+    // create an input if we did not wrap one
+    if (!el.input) {
+      el.input = document.createElement('input');
+      el.appendChild(el.input);
+      copyAttributes(el, el.input);
+    }
+    el.input.addEventListener('focus', function() {
+      el.setAttribute('focus','');
+    });
+    el.input.addEventListener('blur', function() {
+      el.removeAttribute('focus');
+    });
+  }
 
   var BrickInputElementPrototype = Object.create(HTMLElement.prototype);
 
-  // Lifecycle methods
-
-  BrickInputElementPrototype.createdCallback = function () {
+  BrickInputElementPrototype.createdCallback = function() {
 
   };
 
-  BrickInputElementPrototype.attachedCallback = function () {
+  BrickInputElementPrototype.attachedCallback = function() {
 
+    var brickInput = this;
+
+    // import template
     var importDoc = currentScript.ownerDocument;
-    var template = importDoc.querySelector('template');
+    var templateContent = importDoc.querySelector('template').content;
 
     // fix styling for polyfill
     if (Platform.ShadowCSS) {
-      var styles = template.content.querySelectorAll('style');
-      for (var i = 0; i < styles.length; i++) {
-        var style = styles[i];
-        var cssText = Platform.ShadowCSS.shimStyle(style, 'brick-input');
-        Platform.ShadowCSS.addCssToDocument(cssText);
-        style.remove();
-      }
+      shimShadowStyles(templateContent.querySelectorAll('style'),'brick-input');
     }
 
-    // create shadowRoot and append template to it.
+    // create shadowRoot and append template
     var shadowRoot = this.createShadowRoot();
-    shadowRoot.appendChild(template.content.cloneNode(true));
+    shadowRoot.appendChild(templateContent.cloneNode(true));
+
+    // setup input
+    setupInput(this);
+
+    var clearButton = shadowRoot.querySelector('#clear');
+    clearButton.addEventListener('click', function() {
+      brickInput.input.value = '';
+    });
 
   };
 
-  BrickInputElementPrototype.detachedCallback = function () {
+  BrickInputElementPrototype.detachedCallback = function() {
 
   };
 
-  BrickInputElementPrototype.attributeChangedCallback = function (attr, oldVal, newVal) {
+  BrickInputElementPrototype.attributeChangedCallback = function(attr, oldVal, newVal) {
     if (attr in attrs) {
       attrs[attr].call(this, oldVal, newVal);
     }
@@ -47,28 +82,17 @@
 
   // Attribute handlers
 
-  var attrs = {
-    'clearbutton': function (oldVal, newVal) {
-      console.log(oldVal,newVal);
-    }
-  };
-
-  // Custom methods
-
-  BrickInputElementPrototype.foo = function () {
-
-  };
+  var attrs = {};
 
   // Property handlers
-
   Object.defineProperties(BrickInputElementPrototype, {
     'clearbutton': {
-      get: function () {
+      get: function() {
         return this.hasAttribute('clearbutton');
       },
-      set: function (newVal) {
+      set: function(newVal) {
         if (newVal) {
-          this.setAttribute('clearbutton','');
+          this.setAttribute('clearbutton', '');
         } else {
           this.removeAttribute('clearbutton');
         }
