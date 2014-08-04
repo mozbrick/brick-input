@@ -66,6 +66,7 @@
     var clearButton = shadowRoot.querySelector('#clear');
     clearButton.addEventListener('click', function() {
       brickInput.input.value = '';
+      brickInput.input.focus();
     });
 
   };
