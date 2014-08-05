@@ -2,14 +2,15 @@
 
 <template>
   <style></style>
-  <style>:host {
+  <style>:host .field {
   display: inline-block;
   width: 100%;
   min-height: 40px;
   border: 1px solid #d6d6d6;
   position: relative;
+  overflow: hidden;
 }
-:host ::content input {
+:host input {
   min-height: 40px;
   font-size: inherit;
   width: 100%;
@@ -21,21 +22,22 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: inherit;
 }
-:host ::content input:focus {
+:host input:focus {
   outline-width: 0;
 }
-:host ::content input::-moz-placeholder {
+:host input::-moz-placeholder {
   font-style: italic;
   font-weight: lighter;
   color: #909ca7;
 }
-:host ::content input::-webkit-input-placeholder {
+:host input::-webkit-input-placeholder {
   font-style: italic;
   font-weight: lighter;
   color: #909ca7;
 }
-:host #indicator {
+:host .indicator {
   content: " ";
   width: 100%;
   position: absolute;
@@ -47,7 +49,7 @@
   transform: scaleX(0);
   z-index: 9;
 }
-:host #clear {
+:host .clear {
   position: absolute;
   top: 12px;
   right: 10px;
@@ -58,18 +60,23 @@
   opacity: 0;
   color: #fff;
 }
-:host([focus]) #indicator {
+:host([type=search]) .field {
+  border-radius: 30px;
+}
+:host([focus]) .indicator {
   transform: scaleX(1);
   transition-delay: 300ms;
 }
-:host([focus]) #clear {
+:host([focus]) .clear {
   opacity: 1;
 }
 </style>
-  <div id="clear"></div>
-  <div id="indicator"></div>
-  <content>
-  </content>
+  <div class="label"></div>
+  <div class="field">
+    <div class="clear"></div>
+    <div class="indicator"></div>
+    <input type="text">
+  </div>
 </template>
 
 

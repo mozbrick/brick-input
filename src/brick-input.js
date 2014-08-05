@@ -5,6 +5,9 @@
   var currentScript = document._currentScript || document.currentScript;
 
   function shimShadowStyles(styles, tag) {
+    if (!Platform.ShadowCSS) {
+      return;
+    }
     for (var i = 0; i < styles.length; i++) {
       var style = styles[i];
       var cssText = Platform.ShadowCSS.shimStyle(style, tag);
@@ -13,28 +16,29 @@
     }
   }
 
-  function copyAttributes(src, dest) {
+  function copyAttributes(src, dest, exceptions) {
     var attrs = src.attributes;
     for (var i = 0; i < attrs.length; i++) {
       var attr = src.attributes[i];
-      dest.setAttribute(attr.name, attr.value);
+      if (exceptions.indexOf(attr.name) === -1) {
+        dest.setAttribute(attr.name, attr.value);
+      }
     }
   }
 
-  function setupInput(el) {
-    el.input = el.querySelector('input');
-    // create an input if we did not wrap one
-    if (!el.input) {
-      el.input = document.createElement('input');
-      el.appendChild(el.input);
-      copyAttributes(el, el.input);
+  function inputValueChanged(e) {
+    var brickInput = e.currentTarget;
+    validateInput(brickInput);
+  }
+
+  function validateInput(brickInput) {
+    var regExp = new RegExp(brickInput.validate);
+    var value = brickInput.inputElement.value;
+    if (regExp.test(value)) {
+      //
+    } else {
+      //
     }
-    el.input.addEventListener('focus', function() {
-      el.setAttribute('focus','');
-    });
-    el.input.addEventListener('blur', function() {
-      el.removeAttribute('focus');
-    });
   }
 
   var BrickInputElementPrototype = Object.create(HTMLElement.prototype);
@@ -52,21 +56,42 @@
     var templateContent = importDoc.querySelector('template').content;
 
     // fix styling for polyfill
-    if (Platform.ShadowCSS) {
-      shimShadowStyles(templateContent.querySelectorAll('style'),'brick-input');
-    }
+    shimShadowStyles(templateContent.querySelectorAll('style'),'brick-input');
 
     // create shadowRoot and append template
     var shadowRoot = this.createShadowRoot();
     shadowRoot.appendChild(templateContent.cloneNode(true));
 
-    // setup input
-    setupInput(this);
+    // get the input
+    this.input = shadowRoot.querySelector('input');
+    copyAttributes(this,this.input,['label']);
 
-    var clearButton = shadowRoot.querySelector('#clear');
+    // setup label
+    var placeholderText = this.getAttribute('placeholder');
+    var labelText = this.getAttribute('label');
+    if (labelText) {
+      var label = shadowRoot.querySelector('.label');
+      label.appendChild(document.createTextNode(labelText));
+    }
+    var ariaLabel = labelText || placeholderText;
+    if (ariaLabel) {
+      this.input.setAttribute('aria-label',labelText);
+    }
+
+    // setup clear button and listen to it
+    var clearButton = shadowRoot.querySelector('.clear');
     clearButton.addEventListener('click', function() {
       brickInput.input.value = '';
       brickInput.input.focus();
+    });
+
+    // listen to focus and blur
+    this.addEventListener('focus', function() {
+      brickInput.setAttribute('focus','');
+    });
+    this.addEventListener('blur', function(e) {
+      // todo: figure out how to prevent indicator flashing
+      brickInput.removeAttribute('focus');
     });
 
   };
@@ -83,7 +108,9 @@
 
   // Attribute handlers
 
-  var attrs = {};
+  var attrs = {
+
+  };
 
   // Property handlers
   Object.defineProperties(BrickInputElementPrototype, {

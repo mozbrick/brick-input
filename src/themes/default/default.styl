@@ -4,41 +4,44 @@
 
 
 :host {
-  display: inline-block;
-  width: 100%;
-  min-height: 40px;
-  border: 1px solid #D6D6D6;
-  position: relative;
 
-  ::content {
-    input {
-      min-height: 40px;
-      font-size: inherit;
-      width: 100%;
-      border: medium none;
-      padding: 0 $dim-small;
-      margin: 0px;
-      color: $color-alpha;
-      background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.5);
-      box-sizing: border-box;
-    }
-
-    input:focus {
-      outline-width: 0;
-    }
-    input::-moz-placeholder {
-        font-style: italic;
-        font-weight: lighter;
-        color: #909ca7;
-    }
-    input::-webkit-input-placeholder {
-        font-style: italic;
-        font-weight: lighter;
-        color: #909ca7;
-    }
+  .field {
+    display: inline-block;
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid #D6D6D6;
+    position: relative;
+    overflow: hidden;
   }
 
-  #indicator {
+  input {
+    min-height: 40px;
+    font-size: inherit;
+    width: 100%;
+    border: medium none;
+    padding: 0 $dim-small;
+    margin: 0px;
+    color: $color-alpha;
+    background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  input:focus {
+    outline-width: 0;
+  }
+  input::-moz-placeholder {
+      font-style: italic;
+      font-weight: lighter;
+      color: #909ca7;
+  }
+  input::-webkit-input-placeholder {
+      font-style: italic;
+      font-weight: lighter;
+      color: #909ca7;
+  }
+
+  .indicator {
     content: " ";
     width: 100%;
     position: absolute;
@@ -50,7 +53,7 @@
     transform: scaleX(0);
     z-index: 9;
   }
-  #clear {
+  .clear {
     position: absolute;
     top: 12px;
     right: 10px;
@@ -62,12 +65,16 @@
     color: #FFF;
   }
 
-  &([focus]) #indicator {
+  &([type=search]) .field {
+    border-radius: 30px;
+  }
+
+  &([focus]) .indicator {
     transform: scaleX(1);
     transition-delay: $button-transition-delay;
   }
 
-  &([focus]) #clear {
+  &([focus]) .clear {
     opacity: 1;
   }
 
