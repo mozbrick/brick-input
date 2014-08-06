@@ -3,8 +3,7 @@
 @import '../../../bower_components/brick-common/styles/themes/default/params'
 
 $error-color = #c00;
-$clear-color = #FFF;
-$clear-icon-bg = #909CA7;
+$input-text-color = #909CA7;
 $border-color = #D6D6D6;
 $dim-small = .825em;
 
@@ -37,19 +36,19 @@ $dim-small = .825em;
     ::content input::-moz-placeholder {
         font-style: italic;
         font-weight: lighter;
-        color: #909ca7;
+        color: $input-text-color;
     }
     ::content input::-webkit-input-placeholder {
         font-style: italic;
         font-weight: lighter;
-        color: #909ca7;
+        color: $input-text-color;
     }
   }
 
   .label {
     //line-height: 1.4em;
     color: $color-epsilon;
-    margin: $dim-small 0 .235em $dim-small;
+    margin: $dim-small 0 .25em $dim-small;
     margin-left: $dim-small
   }
 
@@ -65,7 +64,7 @@ $dim-small = .825em;
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 3px;
+    height: .176em;
     background: #333;
     -webkit-transition: transform 0.2s;
     transition: transform 0.2s;
@@ -76,17 +75,20 @@ $dim-small = .825em;
   }
   .clear {
     cursor: pointer;
-    text-align: center;
     line-height: 1em;
     position: absolute;
     top: .706em;
     right: .588em;
-    background: none repeat scroll 0% 0% $clear-icon-bg;
     width: 1em;
     height: 1em;
-    border-radius: 50%;
     opacity: 0;
-    color: $clear-color;
+    color: $input-text-color;
+    display: inline-block;
+    font-family: "FontAwesome";
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   &([type=search]) .field {
@@ -101,7 +103,11 @@ $dim-small = .825em;
 
   &([focus]) .clear {
     opacity: 1;
+    &:active, &:hover {
+      opacity: 0.3;
+    }
   }
+
   &([error][invalid]) .error {
     display: block;
     font-size: .85em

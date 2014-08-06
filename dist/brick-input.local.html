@@ -38,7 +38,7 @@
 }
 :host .label {
   color: #858585;
-  margin: 0.825em 0 0.235em 0.825em;
+  margin: 0.825em 0 0.25em 0.825em;
   margin-left: 0.825em;
 }
 :host .error {
@@ -52,7 +52,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 3px;
+  height: 0.176em;
   background: #333;
   -webkit-transition: transform 0.2s;
   transition: transform 0.2s;
@@ -63,17 +63,20 @@
 }
 :host .clear {
   cursor: pointer;
-  text-align: center;
   line-height: 1em;
   position: absolute;
   top: 0.706em;
   right: 0.588em;
-  background: none repeat scroll 0% 0% #909ca7;
   width: 1em;
   height: 1em;
-  border-radius: 50%;
   opacity: 0;
-  color: #fff;
+  color: #909ca7;
+  display: inline-block;
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -moz-osx-font-smoothing: grayscale;
 }
 :host([type=search]) .field {
   border-radius: 1.8em;
@@ -86,6 +89,10 @@
 :host([focus]) .clear {
   opacity: 1;
 }
+:host([focus]) .clear:active,
+:host([focus]) .clear:hover {
+  opacity: 0.3;
+}
 :host([error][invalid]) .error {
   display: block;
   font-size: 0.85em;
@@ -93,7 +100,7 @@
 </style>
   <div class="label"></div>
   <div class="field">
-    <div class="clear">&times;</div>
+    <div class="clear" role="button">&#xF057;</div>
     <div class="indicator"></div>
     <content></content>
   </div>
