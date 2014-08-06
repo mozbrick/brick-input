@@ -63,8 +63,16 @@
     shadowRoot.appendChild(templateContent.cloneNode(true));
 
     // get the input
-    this.input = shadowRoot.querySelector('input');
+    this.input = document.createElement('input');
     copyAttributes(this,this.input,['label']);
+    this.appendChild(this.input);
+    this.input.addEventListener('change', function() {
+      if(!brickInput.input.checkValidity()) {
+        brickInput.setAttribute('invalid','');
+      } else {
+        brickInput.removeAttribute('invalid');
+      }
+    });
 
     // setup label
     var placeholderText = this.getAttribute('placeholder');
@@ -78,22 +86,36 @@
       this.input.setAttribute('aria-label',labelText);
     }
 
+    // setup error message
+    var errorText = this.getAttribute('error');
+    if (errorText) {
+      var error = shadowRoot.querySelector('.error');
+      error.appendChild(document.createTextNode(errorText));
+    }
+
     // setup clear button and listen to it
     var clearButton = shadowRoot.querySelector('.clear');
+    this.clearing = false;
     clearButton.addEventListener('click', function() {
       brickInput.input.value = '';
       brickInput.input.focus();
     });
+    clearButton.addEventListener('mousedown', function() {
+      brickInput.clearing = true;
+    });
+    clearButton.addEventListener('mouseup', function() {
+      brickInput.clearing = false;
+    });
 
     // listen to focus and blur
-    this.addEventListener('focus', function() {
+    this.input.addEventListener('focus', function() {
       brickInput.setAttribute('focus','');
     });
-    this.addEventListener('blur', function(e) {
-      // todo: figure out how to prevent indicator flashing
-      brickInput.removeAttribute('focus');
+    this.input.addEventListener('blur', function(e) {
+      if (!brickInput.clearing) {
+        brickInput.removeAttribute('focus');
+      }
     });
-
   };
 
   BrickInputElementPrototype.detachedCallback = function() {

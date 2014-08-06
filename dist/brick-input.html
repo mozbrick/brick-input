@@ -5,77 +5,99 @@
   <style>:host .field {
   display: inline-block;
   width: 100%;
-  min-height: 40px;
   border: 1px solid #d6d6d6;
   position: relative;
+  overflow: hidden;
 }
-:host input {
-  min-height: 40px;
-  font-size: inherit;
+:host .field ::content input {
+  min-height: 2.353em;
   width: 100%;
   border: medium none;
-  padding: 0 14px;
-  margin: 0px;
+  padding: 0 0.825em;
+  margin: 0;
   color: #333;
-  background: none repeat scroll 0% 0% rgba(255,255,255,0.5);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-appearance: none;
   font-family: inherit;
+  font-size: inherit;
 }
-:host input:focus {
+:host .field ::content input:focus {
   outline-width: 0;
 }
-:host input::-moz-placeholder {
+:host .field ::content input::-moz-placeholder {
   font-style: italic;
   font-weight: lighter;
   color: #909ca7;
 }
-:host input::-webkit-input-placeholder {
+:host .field ::content input::-webkit-input-placeholder {
   font-style: italic;
   font-weight: lighter;
   color: #909ca7;
+}
+:host .label {
+  color: #858585;
+  margin: 0.825em 0 0.235em 0.825em;
+  margin-left: 0.825em;
+}
+:host .error {
+  color: #c00;
+  display: none;
+  margin: 0.235em 0 0 0.825em;
 }
 :host .indicator {
   content: " ";
   width: 100%;
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
   height: 3px;
   background: #333;
-  transition: all 0.2s;
+  -webkit-transition: transform 0.2s;
+  transition: transform 0.2s;
+  -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  z-index: 9;
+  opacity: 0;
+  z-index: 1;
 }
 :host .clear {
+  cursor: pointer;
+  text-align: center;
+  line-height: 1em;
   position: absolute;
-  top: 12px;
-  right: 10px;
+  top: 0.706em;
+  right: 0.588em;
   background: none repeat scroll 0% 0% #909ca7;
-  width: 17px;
-  height: 17px;
+  width: 1em;
+  height: 1em;
   border-radius: 50%;
   opacity: 0;
   color: #fff;
 }
 :host([type=search]) .field {
-  border-radius: 30px;
+  border-radius: 1.765em;
 }
 :host([focus]) .indicator {
+  -webkit-transform: scaleX(1);
   transform: scaleX(1);
-  transition-delay: 300ms;
+  opacity: 1;
 }
 :host([focus]) .clear {
   opacity: 1;
 }
+:host([error][invalid]) .error {
+  display: block;
+  font-size: 0.85em;
+}
 </style>
   <div class="label"></div>
   <div class="field">
-    <div class="clear"></div>
+    <div class="clear">&#xD7;</div>
     <div class="indicator"></div>
-    <input type="text">
+    <content></content>
   </div>
+  <div class="error"></div>
 </template>
 
 
