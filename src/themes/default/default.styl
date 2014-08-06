@@ -29,20 +29,34 @@ $dim-small = .825em;
       font-family: inherit;
       font-size: inherit;
     }
-
     ::content input:focus {
       outline-width: 0;
     }
     ::content input::-moz-placeholder {
-        font-style: italic;
-        font-weight: lighter;
-        color: $input-text-color;
+      font-style: italic;
+      font-weight: lighter;
+      color: $input-text-color;
     }
     ::content input::-webkit-input-placeholder {
-        font-style: italic;
-        font-weight: lighter;
-        color: $input-text-color;
+      font-style: italic;
+      font-weight: lighter;
+      color: $input-text-color;
     }
+
+    ::content textarea {
+      width: 100%;
+      border: medium none;
+      padding: $dim-small;
+      color: $color-alpha;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    ::content textarea:focus {
+      outline-width: 0;
+    }
+
   }
 
   .label {
@@ -81,9 +95,8 @@ $dim-small = .825em;
     right: .588em;
     width: 1em;
     height: 1em;
-    opacity: 0;
     color: $input-text-color;
-    display: inline-block;
+    display: none;
     font-family: "FontAwesome";
     font-style: normal;
     font-weight: normal;
@@ -102,10 +115,14 @@ $dim-small = .825em;
   }
 
   &([focus]) .clear {
-    opacity: 1;
+    display: block;
     &:active, &:hover {
       opacity: 0.3;
     }
+  }
+
+  &([multiline]) .clear {
+    display: none;
   }
 
   &([error][invalid]) .error {

@@ -48,7 +48,11 @@
     shadowRoot.appendChild(templateContent.cloneNode(true));
 
     // get the input
-    this.input = document.createElement('input');
+    if (this.hasAttribute('multiline')) {
+      this.input = document.createElement('textarea');
+    } else {
+      this.input = document.createElement('input');
+    }
     copyAttributes(this,this.input,['label']);
     this.appendChild(this.input);
     this.input.addEventListener('change', function() {
