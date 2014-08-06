@@ -26,57 +26,67 @@
     }
   }
 
+  function addListener(arr, el, event, handler, capture) {
+    el.addEventListener(event, handler, capture);
+    arr.push([el, event, handler, capture]);
+  }
+  function removeListener(el, event, handler, capture) {
+    el.removeEventListener(event, handler, capture);
+  }
+
+
   var BrickInputElementPrototype = Object.create(HTMLElement.prototype);
 
-  BrickInputElementPrototype.createdCallback = function() {
+  BrickInputElementPrototype.createdCallback = function () {
 
   };
 
-  BrickInputElementPrototype.attachedCallback = function() {
-
+  BrickInputElementPrototype.attachedCallback = function () {
     var brickInput = this;
+    brickInput.listeners = [];
 
     // import template
     var importDoc = currentScript.ownerDocument;
     var templateContent = importDoc.querySelector('template').content;
 
     // fix styling for polyfill
-    shimShadowStyles(templateContent.querySelectorAll('style'),'brick-input');
+    shimShadowStyles(templateContent.querySelectorAll('style'), 'brick-input');
 
     // create shadowRoot and append template
-    var shadowRoot = this.createShadowRoot();
+    var shadowRoot = brickInput.createShadowRoot();
     shadowRoot.appendChild(templateContent.cloneNode(true));
 
     // get the input
-    if (this.hasAttribute('multiline')) {
-      this.input = document.createElement('textarea');
+    if (brickInput.hasAttribute('multiline')) {
+      brickInput.input = document.createElement('textarea');
     } else {
-      this.input = document.createElement('input');
+      brickInput.input = document.createElement('input');
     }
-    copyAttributes(this,this.input,['label']);
-    this.appendChild(this.input);
-    this.input.addEventListener('change', function() {
+    copyAttributes(brickInput,brickInput.input,['label', 'multiline']);
+    brickInput.appendChild(brickInput.input);
+    var inputChangeListener = function () {
       if(!brickInput.input.checkValidity()) {
-        brickInput.setAttribute('invalid','');
+        brickInput.setAttribute('invalid', '');
       } else {
         brickInput.removeAttribute('invalid');
       }
-    });
+    };
+    addListener(brickInput.listeners, brickInput, 'change', inputChangeListener);
 
     // setup label
-    var placeholderText = this.getAttribute('placeholder');
-    var labelText = this.getAttribute('label');
+    var placeholderText = brickInput.getAttribute('placeholder');
+    var labelText = brickInput.getAttribute('label');
     if (labelText) {
       var label = shadowRoot.querySelector('.label');
       label.appendChild(document.createTextNode(labelText));
     }
     var ariaLabel = labelText || placeholderText;
     if (ariaLabel) {
-      this.input.setAttribute('aria-label',labelText);
+      brickInput.input.setAttribute('aria-label', labelText);
     }
 
     // setup error message
-    var errorText = this.getAttribute('error');
+    var errorText = brickInput.getAttribute('error');
     if (errorText) {
       var error = shadowRoot.querySelector('.error');
       error.appendChild(document.createTextNode(errorText));
@@ -84,34 +94,41 @@
 
     // setup clear button and listen to it
     var clearButton = shadowRoot.querySelector('.clear');
-    this.clearing = false;
-    clearButton.addEventListener('click', function() {
+    brickInput.clearing = false;
+    clearButton.addEventListener('click', function () {
       brickInput.input.value = '';
       brickInput.input.focus();
     });
-    clearButton.addEventListener('mousedown', function() {
+    var clearMouseDownListener = function () {
       brickInput.clearing = true;
-    });
-    clearButton.addEventListener('mouseup', function() {
+    };
+    addListener(brickInput.listeners, clearButton, 'mousedown', clearMouseDownListener);
+    var clearMouseUpListener = function () {
       brickInput.clearing = false;
-    });
+    };
+    addListener(brickInput.listeners, clearButton, 'mouseup', clearMouseUpListener);
 
     // listen to focus and blur
-    this.input.addEventListener('focus', function() {
-      brickInput.setAttribute('focus','');
-    });
-    this.input.addEventListener('blur', function() {
+    var focusListener = function () {
+      brickInput.setAttribute('focus', '');
+    };
+    addListener(brickInput.listeners, brickInput, 'focus', focusListener);
+    var blurListener =function () {
       if (!brickInput.clearing) {
         brickInput.removeAttribute('focus');
       }
-    });
+    };
+    addListener(brickInput.listeners, brickInput, 'blur', blurListener);
   };
 
-  BrickInputElementPrototype.detachedCallback = function() {
-
+  BrickInputElementPrototype.detachedCallback = function () {
+    // clean up listeners
+    while(this.listeners.length) {
+      removeListener.apply(this, this.listeners.shift());
+    }
   };
 
-  BrickInputElementPrototype.attributeChangedCallback = function(attr, oldVal, newVal) {
+  BrickInputElementPrototype.attributeChangedCallback = function (attr, oldVal, newVal) {
     if (attr in attrs) {
       attrs[attr].call(this, oldVal, newVal);
     }
@@ -125,18 +142,7 @@
 
   // Property handlers
   Object.defineProperties(BrickInputElementPrototype, {
-    'clearbutton': {
-      get: function() {
-        return this.hasAttribute('clearbutton');
-      },
-      set: function(newVal) {
-        if (newVal) {
-          this.setAttribute('clearbutton', '');
-        } else {
-          this.removeAttribute('clearbutton');
-        }
-      }
-    }
+
   });
 
   // Register the element
