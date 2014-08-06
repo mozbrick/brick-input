@@ -26,21 +26,6 @@
     }
   }
 
-  function inputValueChanged(e) {
-    var brickInput = e.currentTarget;
-    validateInput(brickInput);
-  }
-
-  function validateInput(brickInput) {
-    var regExp = new RegExp(brickInput.validate);
-    var value = brickInput.inputElement.value;
-    if (regExp.test(value)) {
-      //
-    } else {
-      //
-    }
-  }
-
   var BrickInputElementPrototype = Object.create(HTMLElement.prototype);
 
   BrickInputElementPrototype.createdCallback = function() {
@@ -111,7 +96,7 @@
     this.input.addEventListener('focus', function() {
       brickInput.setAttribute('focus','');
     });
-    this.input.addEventListener('blur', function(e) {
+    this.input.addEventListener('blur', function() {
       if (!brickInput.clearing) {
         brickInput.removeAttribute('focus');
       }
