@@ -112,13 +112,13 @@
     var focusListener = function () {
       brickInput.setAttribute('focus', '');
     };
-    addListener(brickInput.listeners, brickInput, 'focus', focusListener);
+    addListener(brickInput.listeners, brickInput.input, 'focus', focusListener);
     var blurListener =function () {
       if (!brickInput.clearing) {
         brickInput.removeAttribute('focus');
       }
     };
-    addListener(brickInput.listeners, brickInput, 'blur', blurListener);
+    addListener(brickInput.listeners, brickInput.input, 'blur', blurListener);
   };
 
   BrickInputElementPrototype.detachedCallback = function () {
