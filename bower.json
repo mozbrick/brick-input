@@ -6,7 +6,7 @@
     "mozilla"
   ],
   "description": "A Brick input field.",
-  "main": "src/brick-input.html",
+  "main": "dist/brick-input.html",
   "keywords": [
     "brick",
     "webcomponents"
