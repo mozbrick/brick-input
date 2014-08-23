@@ -23,26 +23,20 @@
 3. Start using it:
 
     ```html
-    <brick-input></brick-input>
+    <brick-input name="Name" label="Name" pattern="[A-Z]" error="Only letters, please!">
     ```
 
 ## Options
 
-Attribute     | Options     | Default      | Description
----           | ---         | ---          | ---
-`foo`         | *string*    | `bar`        | An Attribute.
-
-## Methods
-
-Method        | Parameters   | Returns     | Description
----           | ---          | ---         | ---
-`method()`    | None.        | Nothing.    | A method.
-
-## Events
-
-Event         | Description
----           | ---
-`onsomething` | Triggers when something happens.
+Attribute     | Type       | Default       | Description
+---           | ---        | ---           | ---
+`label`       | *string*   | -             | The name for the associated field's label.
+`name`        | *string*   | -             | Equivalent to the `name` attribute on regular HTML input elements.
+`placeholder` | *string*   | -             | Placeholder text when nothing is input.
+`aria-label`  | *string*   | -             | The `aria-label` attribute will default to the value of the `placeholder` attribute if not provided.
+`error`       | *string*   | -             | Text to display when the user has entered invalid input.
+`pattern`     | *regex*    | -             | A regular expression that represents valid characters for this input.
+`multiline`   | *boolean*  | -             | Adding `multiline` will use a `<textarea>` internally.  Default is `input`.
 
 ## Development
 
