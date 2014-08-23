@@ -77,8 +77,8 @@
     var placeholderText = brickInput.getAttribute('placeholder');
     var labelText = brickInput.getAttribute('label');
     if (labelText) {
-      var label = shadowRoot.querySelector('.label');
-      label.appendChild(document.createTextNode(labelText));
+      brickInput.label = shadowRoot.querySelector('.label');
+      brickInput.label.appendChild(document.createTextNode(labelText));
     }
     var ariaLabel = labelText || placeholderText;
     if (ariaLabel) {
@@ -119,6 +119,12 @@
       }
     };
     addListener(brickInput.listeners, brickInput.input, 'blur', blurListener);
+
+    // focus input when clicking label
+    var clickLabelListener = function () {
+      brickInput.input.focus();
+    };
+    addListener(brickInput.listeners, brickInput.label, 'click', clickLabelListener);
   };
 
   BrickInputElementPrototype.detachedCallback = function () {
